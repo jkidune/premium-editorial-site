@@ -1,8 +1,10 @@
 import { createApp } from 'vue'
 import Lenis from 'lenis'
 import 'lenis/dist/lenis.css'
-import './style/main.css'
+
 import App from './App.vue'
+import router from './router'
+import './style/main.css'
 
 const prefersReducedMotion = window.matchMedia(
   '(prefers-reduced-motion: reduce)',
@@ -11,9 +13,9 @@ const prefersReducedMotion = window.matchMedia(
 if (!prefersReducedMotion) {
   new Lenis({
     autoRaf: true,
-    duration: 1.1,
     anchors: true,
+    stopInertiaOnNavigate: true,
   })
 }
 
-createApp(App).mount('#app')
+createApp(App).use(router).mount('#app')
