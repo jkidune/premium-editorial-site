@@ -151,8 +151,8 @@ a {
   max-width: 14ch;
   margin: auto 0;
   font-size: clamp(4.5rem, 14vw, 15rem);
-  font-weight: 800;
-  letter-spacing: -0.085em;
+  font-weight: 600;
+  letter-spacing: -0.03em;
   line-height: 0.8;
   text-wrap: balance;
 }
