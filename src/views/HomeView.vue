@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import AboutUsSection from '../components/AboutUsSection.vue'
+import AnnualReportSection from '../components/AnnualReportSection.vue'
 import HomeHero from '../components/HomeHero.vue'
+import LatestNewsSection from '../components/LatestNewsSection.vue'
+import MarketSnapshotSection from '../components/MarketSnapshotSection.vue'
 import SectionPlaceholder from '../components/SectionPlaceholder.vue'
 import WorkIntroSection from '../components/WorkIntroSection.vue'
 
 const homepageSections = [
-  { number: '04', title: 'Selected Work', dark: true },
-  { number: '05', title: 'Capabilities', dark: false },
-  { number: '06', title: 'Editorial', dark: true },
-  { number: '07', title: 'Studio', dark: false },
-  { number: '08', title: 'Contact', dark: true },
+  { number: '07', title: 'Selected Work', dark: true },
+  { number: '08', title: 'Capabilities', dark: false },
+  { number: '09', title: 'Editorial', dark: true },
+  { number: '10', title: 'Studio', dark: false },
+  { number: '11', title: 'Contact', dark: true },
 ]
 </script>
 
@@ -20,6 +23,12 @@ const homepageSections = [
     <AboutUsSection />
 
     <WorkIntroSection />
+
+    <AnnualReportSection />
+
+    <MarketSnapshotSection />
+
+    <LatestNewsSection />
 
     <SectionPlaceholder
       v-for="section in homepageSections"

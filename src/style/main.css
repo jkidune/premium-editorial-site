@@ -495,25 +495,23 @@ img {
   min-width: 14rem;
   min-height: 3.5rem;
   padding: 0 1.5rem;
-  color: #0d0d0c;
-  background: rgba(13, 13, 12, 0.08);
-  border-radius: 1rem;
-  font-family: "PP Neue Montreal Text", Arial, Helvetica, sans-serif;
-  font-size: 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: 1rem;
   font-weight: 400;
   letter-spacing: -0.03em;
   line-height: 1;
-  text-transform: uppercase;
+  text-transform: none;
   cursor: pointer;
   transition:
-    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .editorial-button:hover {
-  color: #f4f4f0;
-  background: #0d0d0c;
   transform: translateY(-0.15rem);
 }
 
@@ -526,26 +524,478 @@ img {
   outline-offset: 0.3rem;
 }
 
-.editorial-button__arrow {
+.editorial-button--primary {
+  color: #0d0d0c;
+  background: rgba(13, 13, 12, 0.08);
+}
+
+.editorial-button--primary:hover {
+  color: #f4f4f0;
+  background: #0d0d0c;
+}
+
+.editorial-button--secondary {
+  color: #080807;
+  background: #ffffff;
+  border-color: #c4c4c4;
+}
+
+.editorial-button--secondary:hover {
+  color: #f4f4f0;
+  background: #0d0d0c;
+  border-color: #0d0d0c;
+}
+
+.editorial-button--inverse {
+  color: #f4f4f0;
+  background: rgba(244, 244, 240, 0.12);
+  border-color: rgba(244, 244, 240, 0.12);
+}
+
+.editorial-button--inverse:hover {
+  color: #0d0d0c;
+  background: #f4f4f0;
+  border-color: #f4f4f0;
+}
+
+.editorial-button--compact {
+  min-width: auto;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  gap: 1.5rem;
+}
+
+.editorial-button__icon,
+.editorial-button__external-icon {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
   font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.editorial-button:hover .editorial-button__arrow {
-  transform: translateX(0.35rem);
+.editorial-button:hover .editorial-button__icon {
+  transform: translateX(0.3rem);
 }
 
-.editorial-button--dark {
-  color: #f4f4f0;
-  background: rgba(244, 244, 240, 0.12);
+.editorial-button:hover .editorial-button__external-icon {
+  transform: translate(0.14rem, -0.14rem);
+}
+/* Market snapshot */
+
+.market-snapshot {
+  padding: clamp(3.75rem, 5vw, 5.25rem) 0;
+  color: #1b1b1b;
+  background: #ffffff;
 }
 
-.editorial-button--dark:hover {
-  color: #0d0d0c;
-  background: #f4f4f0;
+.market-snapshot__container {
+  width: min(calc(100% - 4rem), 85.9375rem);
+  margin: 0 auto;
+}
+
+.market-snapshot__content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  min-height: 27.625rem;
+  padding: clamp(4.5rem, 6vw, 5.3125rem) 0;
+}
+
+.market-snapshot__statement,
+.market-snapshot__culture p {
+  margin: 0;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: clamp(2rem, 2.3vw, 2.0625rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+}
+
+.market-snapshot__culture {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.market-snapshot__culture p {
+  max-width: 30.5rem;
+  line-height: 1.03;
+}
+
+.market-snapshot__culture .editorial-button {
+  min-width: 17.75rem;
+}
+
+.market-snapshot__panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-height: 25.25rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid #a3a3a3;
+  border-bottom: 1px solid #a3a3a3;
+}
+
+.market-snapshot__intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  padding-right: clamp(1.5rem, 4vw, 5.3125rem);
+}
+
+.market-snapshot__title {
+  max-width: 16ch;
+  margin: 0;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: clamp(2rem, 2.3vw, 2.0625rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.97;
+}
+
+.market-snapshot__action {
+  align-self: flex-start;
+}
+
+.market-snapshot__action .editorial-button {
+  min-width: 12.4375rem;
+}
+
+.market-snapshot__data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  min-width: 0;
+  padding-left: clamp(1.5rem, 3vw, 2rem);
+  border-left: 1px solid #8c8c8c;
+}
+
+.market-ticker {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+
+.market-ticker__track {
+  display: flex;
+  width: max-content;
+  animation: market-ticker-scroll 36s linear infinite;
+  will-change: transform;
+}
+
+.market-ticker:hover .market-ticker__track {
+  animation-play-state: paused;
+}
+
+.market-ticker__group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2rem;
+  padding-right: 2rem;
+}
+
+.market-ticker__item {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: baseline;
+  gap: 0.5rem;
+  color: #6d6d6d;
+  font-family: "PP Neue Montreal Text", Arial, Helvetica, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.market-ticker__item strong {
+  color: #1b1b1b;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-weight: 600;
+}
+
+.market-ticker__item--featured strong {
+  color: #080807;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2rem;
+}
+
+.market-ticker__item em {
+  color: #777;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.market-ticker__change--up,
+.market-snapshot__change--up {
+  color: #26734d !important;
+}
+
+.market-ticker__change--down,
+.market-snapshot__change--down {
+  color: #a33b32 !important;
+}
+
+@keyframes market-ticker-scroll {
+  from {
+    transform: translate3d(calc(-50% - 1rem), 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.market-snapshot__price-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.5rem;
+  min-height: 8rem;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.market-snapshot__company {
+  margin-bottom: 0.7rem;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.market-snapshot__price {
+  display: block;
+  margin: 0;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: clamp(4.5rem, 8.9vw, 8rem);
+  font-weight: 400;
+  letter-spacing: -0.065em;
+  line-height: 0.78;
+}
+
+.market-snapshot__quote-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding-bottom: 0.5rem;
+  color: #4f4f4f;
+  font-family: "PP Neue Montreal Text", Arial, Helvetica, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.market-snapshot__quote-meta span:last-child {
+  font-variant-numeric: tabular-nums;
+}
+
+.market-snapshot__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.market-snapshot__metric {
+  min-width: 0;
+}
+
+.market-snapshot__metric dt {
+  margin: 0 0 0.5rem;
+  color: #1b1b1b;
+  font-family: "PP Neue Montreal Text", Arial, Helvetica, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.market-snapshot__metric dd {
+  margin: 0;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.market-snapshot__status {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  color: #777;
+  font-family: "PP Neue Montreal Text", Arial, Helvetica, sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.market-snapshot__status span {
+  width: 0.4rem;
+  height: 0.4rem;
+  background: #3e805b;
+  border-radius: 50%;
+}
+
+.market-snapshot__status .market-snapshot__status-dot--error {
+  background: #a33b32;
+}
+
+/* Entrance animation */
+
+.market-snapshot__reveal {
+  will-change: opacity, transform;
+}
+
+.market-snapshot--reveal-ready .market-snapshot__reveal {
+  opacity: 0;
+  transform: translate3d(0, 1.25rem, 0);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.market-snapshot--reveal-ready .market-snapshot__reveal--one {
+  transition-delay: 80ms;
+}
+
+.market-snapshot--reveal-ready .market-snapshot__reveal--two {
+  transition-delay: 180ms;
+}
+
+.market-snapshot--reveal-ready .market-snapshot__reveal--three {
+  transition-delay: 280ms;
+}
+
+.market-snapshot--revealed .market-snapshot__reveal {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (max-width: 980px) {
+  .market-snapshot__content {
+    min-height: auto;
+  }
+
+  .market-snapshot__panel {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    min-height: auto;
+  }
+
+  .market-snapshot__intro {
+    min-height: 14rem;
+    padding-right: 0;
+  }
+
+  .market-snapshot__data {
+    min-height: 21rem;
+    padding: 1.5rem 0 0;
+    border-top: 1px solid #8c8c8c;
+    border-left: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .market-snapshot {
+    padding: 4rem 0;
+  }
+
+  .market-snapshot__container {
+    width: min(calc(100% - 3rem), 42rem);
+  }
+
+  .market-snapshot__content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 3rem 0 4.5rem;
+  }
+
+  .market-snapshot__statement,
+  .market-snapshot__culture p {
+    font-size: clamp(1.8rem, 8.5vw, 2.35rem);
+  }
+
+  .market-snapshot__culture .editorial-button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .market-snapshot__intro {
+    min-height: 12.5rem;
+  }
+
+  .market-snapshot__title {
+    font-size: clamp(2rem, 9vw, 2.75rem);
+  }
+
+  .market-snapshot__data {
+    min-height: 24rem;
+  }
+
+  .market-ticker__item {
+    font-size: 0.75rem;
+  }
+
+  .market-snapshot__price {
+    font-size: clamp(4.5rem, 19vw, 6.5rem);
+  }
+
+  .market-snapshot__price-row {
+    justify-content: flex-start;
+  }
+
+  .market-snapshot__metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 1rem;
+  }
+
+  .market-snapshot__metric dd {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .market-snapshot__reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .market-ticker {
+    overflow-x: auto;
+    mask-image: none;
+  }
+
+  .market-ticker__track {
+    animation: none;
+    transform: none;
+  }
+
+  .market-ticker__group[aria-hidden="true"] {
+    display: none;
+  }
 }
 
 /* About button reveal update */
@@ -578,8 +1028,9 @@ img {
   min-height: 180svh;
   color: #0d0d0c;
   background: #f4f4f0;
-  border-bottom: 1px solid rgba(13, 13, 12, 0.25);
+  border-bottom: none;
   border-top: none;
+  z-index: 1;
 }
 
 .work-intro__stage {
@@ -790,6 +1241,695 @@ img {
   .work-intro__button-reveal {
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Annual report */
+
+.annual-report {
+  position: relative;
+  padding: 1.5rem 0;
+  background: #ffffff;
+  z-index: 2;
+}
+
+.annual-report__container {
+  width: min(calc(100% - 3rem), 85.9375rem);
+  margin: 0 auto;
+}
+
+.annual-report__panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.125rem;
+  min-height: 46.6875rem;
+  padding: 0.75rem;
+  overflow: hidden;
+  color: #ffffff;
+  background: #080807;
+  border-radius: 2.0625rem;
+}
+
+.annual-report__image-wrapper {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background: #1b1b1b;
+  border-radius: 1.25rem;
+}
+
+.annual-report__image {
+  position: absolute;
+  inset: 0;
+  background-color: #1b1b1b;
+  background-position: center;
+  background-size: cover;
+  transform: scale(1.04);
+  will-change: clip-path, transform;
+}
+
+.annual-report__image::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.04) 0%,
+      rgba(0, 0, 0, 0.16) 100%
+    );
+}
+
+.annual-report__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 0.35rem 0.35rem 0.35rem 0;
+}
+
+.annual-report__title {
+  max-width: 24rem;
+  margin: 0;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: clamp(3.25rem, 4.5vw, 4rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1.015;
+}
+
+.annual-report__title-line {
+  display: block;
+  will-change: opacity, transform;
+}
+
+.annual-report__bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 20.25rem) 16.9375rem;
+  align-items: end;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.annual-report__description {
+  max-width: 20.25rem;
+  margin: 0;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+}
+
+/* Reusable document card */
+
+.document-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 7.75rem;
+  padding: 0.75rem;
+  overflow: hidden;
+  color: #ffffff;
+  background: #1b1b1b;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition:
+    background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.document-card:hover {
+  background: #2a2a2a;
+  transform: translateY(-0.2rem);
+}
+
+.document-card:focus-visible {
+  outline: 1px solid #ffffff;
+  outline-offset: 0.3rem;
+}
+
+.document-card__type {
+  font-family: "PP Neue Montreal Text", Arial, Helvetica, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.document-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.document-card__title {
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.document-card__icon {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.document-card:hover .document-card__icon {
+  transform: translate(0.16rem, -0.16rem);
+}
+
+/* Entrance sequence */
+
+.annual-report--reveal-ready .annual-report__image {
+  clip-path: inset(0 0 100% 0 round 1.25rem);
+  transform: scale(1.1);
+  transition:
+    clip-path 1.15s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.annual-report--revealed .annual-report__image {
+  clip-path: inset(0 0 0 0 round 1.25rem);
+  transform: scale(1.04);
+}
+
+.annual-report--reveal-ready .annual-report__title-line,
+.annual-report--reveal-ready .annual-report__bottom {
+  opacity: 0;
+  transform: translate3d(0, 1.4rem, 0);
+}
+
+.annual-report--reveal-ready .annual-report__title-line {
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.annual-report--reveal-ready .annual-report__title-line:nth-child(1) {
+  transition-delay: 0.24s;
+}
+
+.annual-report--reveal-ready .annual-report__title-line:nth-child(2) {
+  transition-delay: 0.34s;
+}
+
+.annual-report--reveal-ready .annual-report__bottom {
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.5s;
+}
+
+.annual-report--revealed .annual-report__title-line,
+.annual-report--revealed .annual-report__bottom {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (max-width: 1050px) {
+  .annual-report__panel {
+    min-height: 39rem;
+  }
+
+  .annual-report__bottom {
+    grid-template-columns: minmax(0, 1fr) 14.5rem;
+  }
+
+  .annual-report__description {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .annual-report {
+    padding: 1rem 0;
+  }
+
+  .annual-report__container {
+    width: min(calc(100% - 2rem), 42rem);
+  }
+
+  .annual-report__panel {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    min-height: auto;
+    padding: 0.75rem;
+    border-radius: 1.5rem;
+  }
+
+  .annual-report__image-wrapper {
+    min-height: clamp(21rem, 85vw, 34rem);
+    border-radius: 1rem;
+  }
+
+  .annual-report__content {
+    min-height: 31rem;
+    padding: 0.5rem 0.25rem 0.25rem;
+  }
+
+  .annual-report__title {
+    max-width: 11ch;
+    font-size: clamp(3.1rem, 13vw, 4.6rem);
+  }
+
+  .annual-report__bottom {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .annual-report__description {
+    max-width: 18rem;
+    font-size: 1rem;
+  }
+
+  .document-card {
+    min-height: 7.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .annual-report__image,
+  .annual-report__title-line,
+  .annual-report__bottom {
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Latest news */
+
+.latest-news {
+  padding: clamp(4.5rem, 7vw, 5.3rem) 0;
+  color: #1b1b1b;
+  background: #ffffff;
+}
+
+.latest-news__container,
+.journal-page__container,
+.article-page__container {
+  width: min(calc(100% - 4rem), 85.9375rem);
+  margin: 0 auto;
+}
+
+.latest-news__header {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.3125rem;
+  margin-bottom: 2rem;
+}
+
+.latest-news__heading {
+  margin: 0;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: clamp(2rem, 2.3vw, 2.0625rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.97;
+}
+
+.latest-news__view-all,
+.article-page__back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #8c8c8c;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.latest-news__view-all:hover,
+.article-page__back-link:hover {
+  color: #0d0d0c;
+  transform: translateX(0.18rem);
+}
+
+.latest-news__grid,
+.journal-page__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.news-card {
+  display: block;
+  min-width: 0;
+  color: #1b1b1b;
+}
+
+.news-card__image-wrapper {
+  position: relative;
+  aspect-ratio: 438 / 288;
+  overflow: hidden;
+  background: #e5e5e5;
+  border-radius: 0.6875rem;
+}
+
+.news-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.001);
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.news-card:hover .news-card__image {
+  transform: scale(1.055);
+}
+
+.news-card__image-placeholder {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  color: #8c8c8c;
+  background:
+    linear-gradient(
+      135deg,
+      #e5e5e5 0%,
+      #f4f4f0 50%,
+      #d8d8d4 100%
+    );
+  font-family: "PP Neue Montreal Text", Arial, Helvetica, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.news-card__categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  padding: 0;
+  margin: 1.5rem 0;
+  list-style: none;
+}
+
+.news-card__categories li {
+  color: #8c8c8c;
+  font-family: "PP Neue Montreal Text", Arial, Helvetica, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.news-card__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.news-card__title {
+  max-width: 19ch;
+  margin: 0;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+.news-card__arrow {
+  flex: 0 0 auto;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.news-card:hover .news-card__arrow {
+  transform: translate(0.24rem, -0.24rem);
+}
+
+/* Latest news entrance */
+
+.latest-news--reveal-ready .latest-news__heading,
+.latest-news--reveal-ready .latest-news__view-all,
+.latest-news--reveal-ready .latest-news__card {
+  opacity: 0;
+  transform: translate3d(0, 1.25rem, 0);
+}
+
+.latest-news--reveal-ready .latest-news__heading,
+.latest-news--reveal-ready .latest-news__view-all,
+.latest-news--reveal-ready .latest-news__card {
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.latest-news--reveal-ready .latest-news__view-all {
+  transition-delay: 90ms;
+}
+
+.latest-news--reveal-ready .latest-news__card {
+  transition-delay: calc(130ms + (var(--news-index) * 110ms));
+}
+
+.latest-news--revealed .latest-news__heading,
+.latest-news--revealed .latest-news__view-all,
+.latest-news--revealed .latest-news__card {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Journal */
+
+.journal-page {
+  min-height: 100svh;
+  color: #1b1b1b;
+  background: #ffffff;
+}
+
+.journal-page__hero {
+  padding: clamp(8rem, 15vw, 14rem) 0 clamp(4rem, 8vw, 7rem);
+}
+
+.journal-page__eyebrow {
+  margin: 0 0 1.25rem;
+  color: #8c8c8c;
+  font-family: "PP Neue Montreal Text", Arial, Helvetica, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.journal-page__title {
+  max-width: 10ch;
+  margin: 0;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: clamp(5rem, 12vw, 13rem);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.78;
+}
+
+.journal-page__content {
+  padding: 0 0 6rem;
+}
+
+/* Article */
+
+.article-page {
+  min-height: 100svh;
+  padding: clamp(7rem, 12vw, 11rem) 0 7rem;
+  color: #1b1b1b;
+  background: #ffffff;
+}
+
+.article-page__back-link {
+  margin-bottom: clamp(3rem, 7vw, 7rem);
+}
+
+.article-page__article {
+  max-width: 62rem;
+}
+
+.article-page__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  color: #8c8c8c;
+  font-family: "PP Neue Montreal Text", Arial, Helvetica, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.article-page__title {
+  max-width: 15ch;
+  margin: 0 0 3rem;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: clamp(3.5rem, 7vw, 7.5rem);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.84;
+}
+
+.article-page__image-wrapper {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  background: #e5e5e5;
+  border-radius: 0.875rem;
+}
+
+.article-page__image,
+.article-page__image-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-page__image-placeholder {
+  background:
+    linear-gradient(
+      135deg,
+      #e5e5e5 0%,
+      #f4f4f0 50%,
+      #d8d8d4 100%
+    );
+}
+
+.article-page__excerpt {
+  max-width: 42rem;
+  margin: 0 0 3rem;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: clamp(1.35rem, 2vw, 2rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.article-page__body {
+  max-width: 42rem;
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.45;
+}
+
+.article-page__body :is(h2, h3) {
+  margin: 3rem 0 1rem;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.article-page__body p {
+  margin: 0 0 1.35rem;
+}
+
+.article-page__body blockquote {
+  margin: 2rem 0;
+  padding-left: 1.25rem;
+  border-left: 1px solid #8c8c8c;
+}
+
+.article-page__not-found,
+.article-page__loading {
+  font-family: "PP Neue Montreal", Arial, Helvetica, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  .latest-news__grid,
+  .journal-page__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .latest-news__container,
+  .journal-page__container,
+  .article-page__container {
+    width: min(calc(100% - 3rem), 42rem);
+  }
+
+  .latest-news {
+    padding: 4rem 0;
+  }
+
+  .latest-news__header {
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .latest-news__heading {
+    font-size: 2rem;
+  }
+
+  .latest-news__view-all {
+    font-size: 0.95rem;
+  }
+
+  .latest-news__grid,
+  .journal-page__grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .news-card__title {
+    max-width: 24ch;
+    font-size: 1.25rem;
+  }
+
+  .journal-page__hero {
+    padding-top: 8rem;
+  }
+
+  .article-page {
+    padding-top: 7rem;
+  }
+
+  .article-page__title {
+    margin-bottom: 2rem;
+  }
+
+  .article-page__image-wrapper {
+    aspect-ratio: 4 / 5;
+  }
+
+  .article-page__body {
+    font-size: 1.05rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .latest-news__heading,
+  .latest-news__view-all,
+  .latest-news__card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .news-card__image,
+  .news-card__arrow {
     transition: none !important;
   }
 }
