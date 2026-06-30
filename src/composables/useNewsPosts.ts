@@ -4,7 +4,6 @@ import {
   fetchAllPosts,
   fetchLatestPosts,
 } from '../lib/news'
-import { isSanityConfigured } from '../lib/sanity'
 import type { NewsPost } from '../types/news'
 
 export function useNewsPosts(
@@ -20,10 +19,6 @@ export function useNewsPosts(
   const hasCmsContent = ref(false)
 
   async function loadPosts() {
-    if (!isSanityConfigured) {
-      return
-    }
-
     isLoading.value = true
 
     try {

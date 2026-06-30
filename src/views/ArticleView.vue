@@ -12,7 +12,6 @@ import {
 
 import { fallbackNewsPosts } from '../data/newsFallback'
 import { fetchPostBySlug } from '../lib/news'
-import { isSanityConfigured } from '../lib/sanity'
 import type { NewsPost } from '../types/news'
 
 const route = useRoute()
@@ -59,12 +58,6 @@ async function loadArticle() {
 
   const fallbackArticle =
     fallbackNewsPosts.find((post) => post.slug === slug) ?? null
-
-  if (!isSanityConfigured) {
-    article.value = fallbackArticle
-    isLoading.value = false
-    return
-  }
 
   try {
     article.value =

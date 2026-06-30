@@ -7,6 +7,56 @@ const MARKET_SYMBOLS = [
   { symbol: 'BIRK', name: 'Birkenstock' },
 ] as const
 
+const SANITY_API_VERSION = '2026-06-30'
+const DEFAULT_SANITY_PROJECT_ID = '49js8lcc'
+const DEFAULT_SANITY_DATASET = 'production'
+
+const postFields = `
+  _id,
+  title,
+  "slug": slug.current,
+  "categories": coalesce(categories, []),
+  "imageUrl": featuredImage.asset->url,
+  "imageAlt": coalesce(featuredImage.alt, title),
+  "excerpt": coalesce(excerpt, ""),
+  publishedAt,
+  body
+`
+
+const latestPostsQuery = `
+  *[
+    _type == "post" &&
+    defined(slug.current) &&
+    defined(publishedAt) &&
+    coalesce(isPublished, true) == true
+  ]
+  | order(publishedAt desc)[0...3] {
+    ${postFields}
+  }
+`
+
+const allPostsQuery = `
+  *[
+    _type == "post" &&
+    defined(slug.current) &&
+    defined(publishedAt) &&
+    coalesce(isPublished, true) == true
+  ]
+  | order(publishedAt desc) {
+    ${postFields}
+  }
+`
+
+const postBySlugQuery = `
+  *[
+    _type == "post" &&
+    slug.current == $slug &&
+    coalesce(isPublished, true) == true
+  ][0] {
+    ${postFields}
+  }
+`
+
 type JsonRecord = Record<string, unknown>
 
 type Quote = {
@@ -50,6 +100,55 @@ function parseNumber(value: string | null): number | null {
 
 function isoDate(date: Date): string {
   return date.toISOString().slice(0, 10)
+}
+
+function safeSanityIdentifier(value: string | undefined, fallback: string) {
+  return value && /^[a-z0-9_-]+$/i.test(value)
+    ? value
+    : fallback
+}
+
+async function fetchSanityNews(url: URL, env: Env): Promise<unknown> {
+  const projectId = safeSanityIdentifier(
+    env.VITE_SANITY_PROJECT_ID,
+    DEFAULT_SANITY_PROJECT_ID,
+  )
+  const dataset = safeSanityIdentifier(
+    env.VITE_SANITY_DATASET,
+    DEFAULT_SANITY_DATASET,
+  )
+  const slug = url.searchParams.get('slug')
+  const mode = url.searchParams.get('mode')
+  const query = slug
+    ? postBySlugQuery
+    : mode === 'all'
+      ? allPostsQuery
+      : latestPostsQuery
+
+  const endpoint = new URL(
+    `https://${projectId}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${dataset}`,
+  )
+  endpoint.searchParams.set('query', query)
+
+  if (slug) {
+    endpoint.searchParams.set('$slug', JSON.stringify(slug))
+  }
+
+  const response = await fetch(endpoint, {
+    headers: { Accept: 'application/json' },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Sanity request failed with ${response.status}`)
+  }
+
+  const payload: unknown = await response.json()
+
+  if (!isRecord(payload) || !('result' in payload)) {
+    throw new Error('Sanity returned an invalid response')
+  }
+
+  return payload.result
 }
 
 async function fetchNasdaq(path: string): Promise<unknown> {
@@ -157,10 +256,10 @@ function jsonResponse(body: unknown, init: ResponseInit = {}): Response {
 }
 
 export default {
-  async fetch(request, _env, ctx): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     const url = new URL(request.url)
 
-    if (url.pathname !== '/api/market') {
+    if (url.pathname !== '/api/market' && url.pathname !== '/api/news') {
       return new Response('Not found', { status: 404 })
     }
 
@@ -180,21 +279,33 @@ export default {
     }
 
     try {
-      const response = jsonResponse(await fetchMarketData(), {
+      const isNewsRequest = url.pathname === '/api/news'
+      const body = isNewsRequest
+        ? await fetchSanityNews(url, env)
+        : await fetchMarketData()
+      const response = jsonResponse(body, {
         headers: {
-          'Cache-Control': 'public, max-age=300, stale-while-revalidate=900',
+          'Cache-Control': isNewsRequest
+            ? 'public, max-age=60, stale-while-revalidate=300'
+            : 'public, max-age=300, stale-while-revalidate=900',
         },
       })
       ctx.waitUntil(cache.put(cacheKey, response.clone()))
       return response
     } catch (error) {
       console.error(JSON.stringify({
-        event: 'market_data_fetch_failed',
+        event: url.pathname === '/api/news'
+          ? 'sanity_news_fetch_failed'
+          : 'market_data_fetch_failed',
         message: error instanceof Error ? error.message : 'Unknown error',
       }))
 
       return jsonResponse(
-        { message: 'Market data is temporarily unavailable.' },
+        {
+          message: url.pathname === '/api/news'
+            ? 'News is temporarily unavailable.'
+            : 'Market data is temporarily unavailable.',
+        },
         {
           status: 502,
           headers: { 'Cache-Control': 'no-store' },

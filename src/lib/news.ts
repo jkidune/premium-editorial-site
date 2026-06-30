@@ -1,77 +1,29 @@
-import { sanityClient } from './sanity'
 import type { NewsPost } from '../types/news'
 
-const postFields = `
-  _id,
-  title,
-  "slug": slug.current,
-  "categories": coalesce(categories, []),
-  "imageUrl": featuredImage.asset->url,
-  "imageAlt": coalesce(featuredImage.alt, title),
-  "excerpt": coalesce(excerpt, ""),
-  publishedAt,
-  body
-`
+async function fetchNews<T>(parameters: URLSearchParams): Promise<T> {
+  const response = await fetch(`/api/news?${parameters.toString()}`, {
+    headers: { Accept: 'application/json' },
+  })
 
-const latestPostsQuery = `
-  *[
-    _type == "post" &&
-    defined(slug.current) &&
-    defined(publishedAt) &&
-    coalesce(isPublished, true) == true
-  ]
-  | order(publishedAt desc)[0...3] {
-    ${postFields}
+  if (!response.ok) {
+    throw new Error(`News API returned ${response.status}`)
   }
-`
 
-const allPostsQuery = `
-  *[
-    _type == "post" &&
-    defined(slug.current) &&
-    defined(publishedAt) &&
-    coalesce(isPublished, true) == true
-  ]
-  | order(publishedAt desc) {
-    ${postFields}
-  }
-`
-
-const postBySlugQuery = `
-  *[
-    _type == "post" &&
-    slug.current == $slug &&
-    coalesce(isPublished, true) == true
-  ][0] {
-    ${postFields}
-  }
-`
+  return response.json() as Promise<T>
+}
 
 export async function fetchLatestPosts(): Promise<NewsPost[]> {
-  if (!sanityClient) {
-    return []
-  }
-
-  return sanityClient.fetch<NewsPost[]>(latestPostsQuery)
+  return fetchNews<NewsPost[]>(new URLSearchParams({ mode: 'latest' }))
 }
 
 export async function fetchAllPosts(): Promise<NewsPost[]> {
-  if (!sanityClient) {
-    return []
-  }
-
-  return sanityClient.fetch<NewsPost[]>(allPostsQuery)
+  return fetchNews<NewsPost[]>(new URLSearchParams({ mode: 'all' }))
 }
 
 export async function fetchPostBySlug(
   slug: string,
 ): Promise<NewsPost | null> {
-  if (!sanityClient) {
-    return null
-  }
-
-  return sanityClient.fetch<NewsPost | null>(
-    postBySlugQuery,
-    { slug },
+  return fetchNews<NewsPost | null>(
+    new URLSearchParams({ slug }),
   )
 }
